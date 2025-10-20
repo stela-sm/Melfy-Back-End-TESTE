@@ -270,3 +270,104 @@ async function deletaProduto(idProd) {
   }
 }
 
+
+//--------------------------------------NOVO ENDEREÇO----------------------------------------
+async function enviarEndereco(data) {
+  try {
+    const res = await fetch("http://localhost:8000/lojas/endereco", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("tokenLoja"),
+      },
+      body: JSON.stringify(data),
+    });
+
+    const result = await res.json();
+    console.log("Resposta da API:", result);
+  } catch (error) {
+    console.error("Erro na requisição:", error);
+  }
+}
+
+
+document.getElementById("enderecoForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const data = {
+    cep: document.getElementById("cep").value,
+    pais: document.getElementById("pais").value,
+    estado: document.getElementById("estado").value,
+    cidade: document.getElementById("cidade").value,
+    bairro: document.getElementById("bairro").value,
+    rua: document.getElementById("rua").value,
+    numero: document.getElementById("numero").value || null,
+    bloco: document.getElementById("bloco").value || null,
+    apto: document.getElementById("apto").value || null,
+    obs: document.getElementById("obs").value || null,
+    nome: document.getElementById("nome").value
+  };
+
+  enviarEndereco(data)
+})
+
+
+//------------------------------------BUSCAR ENDEREÇOS----------------------------------
+async function buscarEnderecos(){
+  try {
+    const res = await fetch("http://localhost:8000/lojas/endereco", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("tokenLoja"),
+      },
+    });
+
+    if (!res.ok) throw new Error("Erro ao buscar endereços");
+
+    const enderecos = await res.json();
+    console.log("Endereços:", enderecos);
+
+    const lista = document.getElementById("listaEnderecos");
+    lista.innerHTML = "";
+
+   enderecos.result.forEach((item) => {
+     const div = document.createElement("div");
+     div.classList.add("endereco-item");
+     div.dataset.id = item.id; // importante para editar/deletar no backend
+
+     div.innerHTML = `
+    <input type="text" class="end-nome" value="${
+      item.nome
+    }" placeholder="Nome do Endereço">
+
+    <input type="text" class="end-rua" value="${item.rua}" placeholder="Rua">
+    <input type="text" class="end-numero" value="${
+      item.numero || ""
+    }" placeholder="Número">
+    <input type="text" class="end-bairro" value="${
+      item.bairro
+    }" placeholder="Bairro">
+
+    <input type="text" class="end-cidade" value="${
+      item.cidade
+    }" placeholder="Cidade">
+    <input type="text" class="end-estado" value="${
+      item.estado
+    }" placeholder="Estado" maxlength="2">
+    <input type="text" class="end-cep" value="${item.cep}" placeholder="CEP">
+
+    <button class="btn-salvar">Salvar</button>
+    <button class="btn-excluir">Excluir</button>
+    <hr>
+  `;
+
+     lista.appendChild(div);
+   });
+
+  } catch (err) {
+    console.error(err);
+    alert("Falha ao carregar endereços. ");
+  }
+}
+
+buscarEnderecos()
