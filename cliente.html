@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotas de Cliente</title>
+</head>
+
+<body>
+    <section>
+        <h1>Cadastro de Cliente</h1>
+        <small>A ordem dos campos não importa!</small>
+        <br>
+        <form id="formCadastro" action="">
+            <label>Nome <input type="text" name="" id="cadastroNome"></label><br>
+            <label>Telefone <input type="tel" name="" id="cadastroTelefone"></label><br>
+            <label> Email <input type="email" name="" id="cadastroEmail"></label><br>
+            <label> Senha <input type="password" name="" id="cadastroSenha"></label><br>
+            <label>CPF <input type="text" name="" id="cadastroCpf"></label><br>
+            <label>Data de Nascimento <input type="date" name="" id="cadastrodatanasc"></label>
+            <br>
+            <button type="button" id="cadastrarBotao">Cadastrar</button>
+        </form>
+    </section>
+    <br><br>
+    <section>
+        <h1>Login de Cliente</h1>
+        <small>A ordem dos campos não importa!</small>
+        <br>
+        <form id="formLogin" action="">
+            <label> Email <input type="email" name="" id="loginEmail"></label><br>
+            <label> Senha <input type="password" name="" id="loginSenha"></label><br>
+            <br>
+            <button type="button" id="loginButton">Logar</button>
+        </form>
+    </section> <br><br>
+    <section>
+        <h1>Deletar Cliente</h1>
+        <button type="button" id="deletarBotao">Deletar</button>
+    </section>
+
+    <br><br>
+
+    <section>
+        <h1>Atualização de Cliente</h1>
+        <small>A ordem dos campos não importa! Aqui não atualiza senha! <br>
+            Perceba que assim que o login é feio, aqui é preenchido.<br>
+             Como isso aqui vai ser feito é decisão do front, vocês podem deixar o usuário atualizar um dado de cada vez, ou todos, mas o importante é ir formatado pra API.</small>
+        <br><br>
+        <form id="formAtualiza" action="">
+            <label>Nome <input type="text" name="" id="atualizaNome"></label><br>
+                <label>Telefone <input type="tel" name="" id="atualizaTelefone"></label><br>
+                <label> Email <input type="email" name="" id="atualizaEmail"></label><br>
+                <label>CPF <input type="text" name="" id="atualizaCpf"></label><br>
+                <label>Data de Nascimento <input type="date" name="" id="atualizadatanasc"></label>
+                <br>
+                <button type="button" id="atualizarBotao">Atualizar</button>
+        </form>
+    </section>
+
+    <a href="carrinho.html">Ir para o carrinho</a>
+    <script src="cliente.js"></script>
+</body>
+</html>

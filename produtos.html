@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotas de produtos</title>
+</head>
+<body>
+    <h1>
+        Adiciona Produtos (Apenas lojas)- <a href="lojas.html">Logar em loja</a>
+    </h1>
+        <form id="formProduto" enctype="multipart/form-data">
+            <label>Nome:</label>
+            <input type="text" name="nome" required><br>
+        
+            <label>Valor:</label>
+            <input type="number" name="valor" required><br>
+        
+            <label>Imagem:</label>
+            <input type="file" name="img" accept="image/*" required><br>
+        
+            <label>Descrição:</label>
+            <textarea name="descricao" required></textarea><br>
+        
+            <label>Categoria:</label>
+            <select name="categoria" required>
+                <option value="1">Categoria 1</option>
+                <option value="2">Categoria 2</option>
+            </select><br>
+        
+            <label>Prazo (dias):</label>
+            <input type="number" name="prazo" required><br>
+        
+            <button type="submit">Enviar Produto</button>
+        </form>
+
+
+    <h1>
+        Produtos
+    </h1>
+    <div id="listaProdutos"></div>
+
+    <hr></hr>
+    <h1>
+        Meu Carrinho
+    </h1>
+    <div id="listaCarrinho"></div>
+    <script src="produtos.js"></script>
+    <script src="carrinho.js"></script>
+</body>
+</html>

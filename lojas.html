@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotas de Loja</title>
+</head>
+
+<body>
+    <section>
+        <h1>Cadastro de Loja</h1>
+        <small>A ordem dos campos não importa!</small>
+        <br>
+        <form id="formCadastroLoja" action="">
+            <label>Nome <input type="text" id="cadastroNomeLoja"></label><br>
+            <label>Email <input type="email" id="cadastroEmailLoja"></label><br>
+            <label>Descrição <input type="text" id="cadastroDescricaoLoja"></label><br>
+            <label>Telefone <input type="tel" id="cadastroTelefoneLoja"></label><br>
+            <label>CPF/CNPJ <input type="text" id="cadastroCpfCnpjLoja"></label><br>
+            <label>Senha <input type="password" id="cadastroSenhaLoja"></label><br>
+            <button type="button" id="cadastrarBotaoLoja">Cadastrar</button>
+        </form>
+    </section>
+
+    <br><br>
+
+    <section>
+        <h1>Login de Loja</h1>
+        <small>A ordem dos campos não importa!</small>
+        <br>
+        <form id="formLoginLoja" action="">
+            <label>Email <input type="email" id="loginEmailLoja"></label><br>
+            <label>Senha <input type="password" id="loginSenhaLoja"></label><br>
+            <button type="button" id="loginBotaoLoja">Logar</button>
+        </form>
+    </section>
+
+    <br><br>
+
+    <section>
+        <h1>Deletar Loja</h1>
+        <button type="button" id="deletarBotaoLoja">Deletar</button>
+    </section>
+
+    <br><br>
+
+    <section>
+        <h1>Atualização de Loja</h1>
+        <small>Aqui não atualiza senha!<br>
+            Assim que o login é feito, o formulário pode ser preenchido automaticamente.<br>
+            O importante é que o JSON enviado esteja formatado corretamente para a API.</small>
+        <br><br>
+        <form id="formAtualizaLoja" action="">
+            <label>Nome <input type="text" id="atualizaNomeLoja"></label><br>
+            <label>Email <input type="email" id="atualizaEmailLoja"></label><br>
+            <label>Descrição <input type="text" id="atualizaDescricaoLoja"></label><br>
+            <label>Telefone <input type="tel" id="atualizaTelefoneLoja"></label><br>
+            <label>CPF/CNPJ <input type="text" id="atualizaCpfCnpjLoja"></label><br>
+            <button type="button" id="atualizarBotaoLoja">Atualizar</button>
+        </form>
+    </section>
+
+    <section>
+        <h1>Meus Produtos</h1>
+        <div id="meusProdutos"></div>
+    </section>
+
+    <script src="./lojas.js"></script>
+</body>
+
+</html>
