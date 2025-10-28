@@ -8,13 +8,16 @@ if (!localStorage.getItem("tokenCliente")) {
 //--------------------------------------------FETCH CARRINHO ------------------------------------------
 async function fetchCarrinho() {
   try {
-    const res = await fetch("http://localhost:8000/carrinho", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("tokenCliente"),
-      },
-    });
+    const res = await fetch(
+      "https://melfy-backend-production.up.railway.app/carrinho",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("tokenCliente"),
+        },
+      }
+    );
 
     if (!res.ok) {
       throw new Error("Erro ao buscar carrinho: " + res.status);
@@ -66,10 +69,9 @@ async function fetchCarrinho() {
   });
 }
 
-
-document.addEventListener("DOMContentLoaded", function() {
-fetchCarrinho();})
-
+document.addEventListener("DOMContentLoaded", function () {
+  fetchCarrinho();
+});
 
 //------------------------------------------REMOVER ITEM CARRINHO------------------------------------
 //aqui remove de 1 em 1, mas se você quiser remover o PRODUTO do carrinho, só colocar no qtd o a quantidade total do produto no carrinho. o qtd não é obrigatório
@@ -77,14 +79,18 @@ fetchCarrinho();})
 async function removeDoCarrinho(idProduto) {
   console.log(idProduto);
   try {
-    const res = await fetch("http://localhost:8000/carrinho?id=" + idProduto, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("tokenCliente"),
-      },
-      body: JSON.stringify({ qtd: 1 }),
-    });
+    const res = await fetch(
+      "https://melfy-backend-production.up.railway.app/carrinho?id=" +
+        idProduto,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("tokenCliente"),
+        },
+        body: JSON.stringify({ qtd: 1 }),
+      }
+    );
 
     const data = await res.json();
     console.log(data);
@@ -94,4 +100,3 @@ async function removeDoCarrinho(idProduto) {
     alert("Falha ao remover do carrinho. Veja o console.");
   }
 }
-

@@ -1,14 +1,16 @@
 // -------------------------- CADASTRO DE LOJA ----------------------------------------
 
-
 async function cadastrar(dados) {
-  const res = await fetch("http://localhost:8000/lojas", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(dados),
-  });
+  const res = await fetch(
+    "https://melfy-backend-production.up.railway.app/lojas",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dados),
+    }
+  );
 
   //trata o retorno
   retorno = await res.json();
@@ -32,25 +34,24 @@ document.getElementById("cadastrarBotaoLoja").addEventListener("click", () => {
   }
 
   const dados = { nome, email, descricao, telefone, cpf_cnpj, senha };
-  cadastrar(dados); 
+  cadastrar(dados);
 });
-
-
-
 
 //-----------------------------------------------PEGAR INFO DO CLIENTE -----------------------------------//
 //essa rota NECESSITA do token jwt, ela só vai funcionar quando o login já foi feito
 
-
 async function fetchLoja() {
   try {
-    const res = await fetch("http://localhost:8000/lojas", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("tokenLoja"),
-      },
-    });
+    const res = await fetch(
+      "https://melfy-backend-production.up.railway.app/lojas",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("tokenLoja"),
+        },
+      }
+    );
 
     if (!res.ok) {
       throw new Error("Erro ao buscar loja: " + res.status);
@@ -76,21 +77,22 @@ async function fetchLoja() {
   }
 }
 
-
 // ------------------------------------------- LOGIN DE LOJA -------------------------------
 
-
 async function logar(email, senha) {
-  const res = await fetch("http://localhost:8000/lojas/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email: email,
-      senha: senha,
-    }),
-  });
+  const res = await fetch(
+    "https://melfy-backend-production.up.railway.app/lojas/login",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        senha: senha,
+      }),
+    }
+  );
 
   //trata o retorno
   json = await res.json();
@@ -102,7 +104,6 @@ async function logar(email, senha) {
   fetchLoja();
 }
 
-
 document.getElementById("loginBotaoLoja").addEventListener("click", () => {
   const email = document.getElementById("loginEmailLoja").value.trim();
   const senha = document.getElementById("loginSenhaLoja").value.trim();
@@ -112,24 +113,22 @@ document.getElementById("loginBotaoLoja").addEventListener("click", () => {
     return;
   }
 
-  logar(email, senha); 
+  logar(email, senha);
 });
-
-
-
-
-
 
 // ------------------------------------ ATUALIZAR LOJA ------------------------------
 async function atualizar(dados) {
-  const res = await fetch("http://localhost:8000/lojas", {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + localStorage.getItem("tokenLoja"),
-    },
-    body: JSON.stringify(dados),
-  });
+  const res = await fetch(
+    "https://melfy-backend-production.up.railway.app/lojas",
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("tokenLoja"),
+      },
+      body: JSON.stringify(dados),
+    }
+  );
 
   //trata o retorno
   console.log(await res.json());
@@ -156,17 +155,8 @@ document.getElementById("atualizarBotaoLoja").addEventListener("click", () => {
     return;
   }
 
-  atualizar(dados); 
+  atualizar(dados);
 });
-
-
-
-
-
-
-
-
-
 
 // ------------------------------------------- DELETAR LOJA -------------------------------------
 
@@ -174,39 +164,40 @@ document.getElementById("atualizarBotaoLoja").addEventListener("click", () => {
 
 async function deletar() {
   console.log(localStorage.getItem("tokenLoja"));
-  const res = await fetch("http://localhost:8000/lojas", {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + localStorage.getItem("tokenLoja"),
-    },
-  });
+  const res = await fetch(
+    "https://melfy-backend-production.up.railway.app/lojas",
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("tokenLoja"),
+      },
+    }
+  );
   console.log(await res.json());
   alert("ROTA CHAMADA COM SUCESSO. RESULTADO NO CONSOLE");
   //destrói o token
   localStorage.removeItem("tokenLoja");
-
 }
-
 
 document.getElementById("deletarBotaoLoja").addEventListener("click", () => {
   if (confirm("Tem certeza que deseja deletar esta loja?")) {
-    deletar(); 
+    deletar();
   }
 });
-
 
 //---------------------------PEGAR OS PRODUTOS DA LOJA -----------------------------------------------
 async function fetchProdutos() {
   try {
-    const res = await fetch(`http://localhost:8000/produtos/fetch`, {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("tokenLoja"),
-      },
-    });
-
-  
+    const res = await fetch(
+      `https://melfy-backend-production.up.railway.app/produtos/fetch`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("tokenLoja"),
+        },
+      }
+    );
 
     const data = await res.json();
     console.log("Produtos recebidos:", data);
@@ -214,14 +205,12 @@ async function fetchProdutos() {
     const container = document.getElementById("meusProdutos");
     container.innerHTML = ""; // limpa antes de preencher
 
+    data.result.forEach((produto) => {
+      const imagem = produto.midia?.imagens?.[0]?.path;
+      const div = document.createElement("div");
+      div.classList.add("produto");
 
-
-   data.result.forEach((produto) => {
-  const imagem = produto.midia?.imagens?.[0]?.path;
-  const div = document.createElement("div");
-  div.classList.add("produto");
-
-  div.innerHTML = `
+      div.innerHTML = `
     <img src="${imagem}" alt="${produto.nome}" width="120">
     <h3>${produto.nome}</h3>
     <p>${produto.descricao}</p>
@@ -230,17 +219,20 @@ async function fetchProdutos() {
     <button class="btn-rmv-produto" data-id="${produto.id_produto}">Deletar</button>
   `;
 
-  // adiciona o evento AQUI
-  div.querySelector(".btn-rmv-produto").addEventListener("click", async (e) => {
-    const idProduto = e.target.getAttribute("data-id");
-    await deletaProduto(idProduto);
-  });
+      // adiciona o evento AQUI
+      div
+        .querySelector(".btn-rmv-produto")
+        .addEventListener("click", async (e) => {
+          const idProduto = e.target.getAttribute("data-id");
+          await deletaProduto(idProduto);
+        });
 
-  container.appendChild(div);
-});
-  }catch(err){
-    console.log(err)
-  }}
+      container.appendChild(div);
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 fetchProdutos();
 
@@ -248,19 +240,22 @@ fetchProdutos();
 
 async function deletaProduto(idProd) {
   try {
-    const res = await fetch("http://localhost:8000/produtos?id=" + idProd, {
-      method: "DELETE",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("tokenLoja"),
-      },
-    });
+    const res = await fetch(
+      "https://melfy-backend-production.up.railway.app/produtos?id=" + idProd,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("tokenLoja"),
+        },
+      }
+    );
 
     const data = await res.json();
     console.log(data);
 
     if (res.ok && !data.error) {
       alert("Produto deletado com sucesso!");
-      fetchProdutos(); 
+      fetchProdutos();
     } else {
       alert("Erro ao deletar produto: " + (data.message || "tente novamente."));
     }
@@ -270,18 +265,20 @@ async function deletaProduto(idProd) {
   }
 }
 
-
 //--------------------------------------NOVO ENDEREÇO----------------------------------------
 async function enviarEndereco(data) {
   try {
-    const res = await fetch("http://localhost:8000/lojas/endereco", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("tokenLoja"),
-      },
-      body: JSON.stringify(data),
-    });
+    const res = await fetch(
+      "https://melfy-backend-production.up.railway.app/lojas/endereco",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("tokenLoja"),
+        },
+        body: JSON.stringify(data),
+      }
+    );
 
     const result = await res.json();
     console.log("Resposta da API:", result);
@@ -290,37 +287,40 @@ async function enviarEndereco(data) {
   }
 }
 
+document
+  .getElementById("enderecoForm")
+  .addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-document.getElementById("enderecoForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
+    const data = {
+      cep: document.getElementById("cep").value,
+      pais: document.getElementById("pais").value,
+      estado: document.getElementById("estado").value,
+      cidade: document.getElementById("cidade").value,
+      bairro: document.getElementById("bairro").value,
+      rua: document.getElementById("rua").value,
+      numero: document.getElementById("numero").value || null,
+      bloco: document.getElementById("bloco").value || null,
+      apto: document.getElementById("apto").value || null,
+      obs: document.getElementById("obs").value || null,
+      nome: document.getElementById("nome").value,
+    };
 
-  const data = {
-    cep: document.getElementById("cep").value,
-    pais: document.getElementById("pais").value,
-    estado: document.getElementById("estado").value,
-    cidade: document.getElementById("cidade").value,
-    bairro: document.getElementById("bairro").value,
-    rua: document.getElementById("rua").value,
-    numero: document.getElementById("numero").value || null,
-    bloco: document.getElementById("bloco").value || null,
-    apto: document.getElementById("apto").value || null,
-    obs: document.getElementById("obs").value || null,
-    nome: document.getElementById("nome").value
-  };
-
-  enviarEndereco(data)
-})
-
+    enviarEndereco(data);
+  });
 
 //------------------------------------BUSCAR ENDEREÇOS----------------------------------
-async function buscarEnderecos(){
+async function buscarEnderecos() {
   try {
-    const res = await fetch("http://localhost:8000/lojas/endereco", {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("tokenLoja"),
-      },
-    });
+    const res = await fetch(
+      "https://melfy-backend-production.up.railway.app/lojas/endereco",
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("tokenLoja"),
+        },
+      }
+    );
 
     if (!res.ok) throw new Error("Erro ao buscar endereços");
 
@@ -330,12 +330,12 @@ async function buscarEnderecos(){
     const lista = document.getElementById("listaEnderecos");
     lista.innerHTML = "";
 
-   enderecos.result.forEach((item) => {
-     const div = document.createElement("div");
-     div.classList.add("endereco-item");
-     div.dataset.id = item.id; // importante para editar/deletar no backend
+    enderecos.result.forEach((item) => {
+      const div = document.createElement("div");
+      div.classList.add("endereco-item");
+      div.dataset.id = item.id; // importante para editar/deletar no backend
 
-     div.innerHTML = `
+      div.innerHTML = `
     <input type="text" class="end-nome" value="${
       item.nome
     }" placeholder="Nome do Endereço">
@@ -361,13 +361,12 @@ async function buscarEnderecos(){
     <hr>
   `;
 
-     lista.appendChild(div);
-   });
-
+      lista.appendChild(div);
+    });
   } catch (err) {
     console.error(err);
     alert("Falha ao carregar endereços. ");
   }
 }
 
-buscarEnderecos()
+buscarEnderecos();

@@ -1,19 +1,19 @@
-
-
 //----------------------------------------------FETCH PRODUTOS -----------------------------------------
 //a busca é feita nos parâmetros da url, então pode ser tipo:
-// http://localhost:8000/produtos?busca=brigadeiro
-// http://localhost:8000/produtos?loja=3
-// http://localhost:8000/produtos?categoria=3
+// https://melfy-backend-production.up.railway.app/produtos?busca=brigadeiro
+// https://melfy-backend-production.up.railway.app/produtos?loja=3
+// https://melfy-backend-production.up.railway.app/produtos?categoria=3
 async function fetchProdutos() {
   try {
-    const res = await fetch("http://localhost:8000/produtos", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("tokenCliente"),
-      },
-    });
+    const res = await fetch(
+      "https://melfy-backend-production.up.railway.app/produtos",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (!res.ok) {
       throw new Error("Erro ao buscar produtos: " + res.status);
@@ -35,8 +35,6 @@ async function fetchProdutos() {
       div.classList.add("item-produto");
       const categorias = produto.categorias.join(", ");
 
-
-
       div.innerHTML = `
         <img src="${produto.midia.imagens[0].path}" alt="${produto.nome}" width="120">
         <h3>${produto.nome}</h3>
@@ -51,7 +49,6 @@ async function fetchProdutos() {
 
       container.appendChild(div);
     });
-
 
     // adiciona evento pros botões criados dinamicamente
     document.querySelectorAll(".btn-add-carrinho").forEach((btn) => {
@@ -68,34 +65,35 @@ async function fetchProdutos() {
   }
 }
 
-
-    fetchProdutos();
+fetchProdutos();
 
 //--------------------------------------------------ADICIONA AO CARRINHO--------------------------------
 //ESSE AQUI PRECISA DO TOKEN, ID DO PRODUTO E QUANTIDADE.
 
 async function adicionarAoCarrinho(idProduto) {
-    
-console.log(idProduto);
+  console.log(idProduto);
   try {
-    const res = await fetch("http://localhost:8000/carrinho?id=" + idProduto, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("tokenCliente"),
-      },
-      body: JSON.stringify({ qtd: 1 }),
-    });
+    const res = await fetch(
+      "https://melfy-backend-production.up.railway.app/carrinho?id=" +
+        idProduto,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("tokenCliente"),
+        },
+        body: JSON.stringify({ qtd: 1 }),
+      }
+    );
 
     const data = await res.json();
-    console.log(data)
+    console.log(data);
     alert(data.message || "Produto adicionado ao carrinho!");
   } catch (erro) {
     console.error("Erro em adicionarAoCarrinho:", erro);
     alert("Falha ao adicionar ao carrinho. Veja o console.");
   }
 }
-
 
 //---------------------------------ADICIONA PRODUTO (APENAS PARA LOJAS)-------------------------------------
 document.getElementById("formProduto").addEventListener("submit", async (e) => {
@@ -104,14 +102,16 @@ document.getElementById("formProduto").addEventListener("submit", async (e) => {
   const form = new FormData(e.target);
 
   try {
-    const res = await fetch("http://localhost:8000/produtos", {
-      method: "POST",
-      headers: {
-        Authorization:
-          "Bearer " + localStorage.getItem("tokenLoja"),
-      },
-      body: form,
-    });
+    const res = await fetch(
+      "https://melfy-backend-production.up.railway.app/produtos",
+      {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("tokenLoja"),
+        },
+        body: form,
+      }
+    );
 
     const data = await res.json();
     console.log("Resposta do servidor:", data);
